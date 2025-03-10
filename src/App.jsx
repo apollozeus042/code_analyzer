@@ -4,32 +4,49 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [code, setCode] = useState('');
+  const [file, setFile] = useState(null);
+  const [readability, setReadability] = useState('N/A');
+  const [bugs, setBugs] = useState('N/A');
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleAnalyze = () => {
+    // Placeholder for analysis logic
+    setReadability('Pending...');
+    setBugs('Pending...');
+    setTimeout(() => {
+      setReadability('Good');
+      setBugs('None');
+    }, 2000);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <h1>Code Readability & Bug Detection</h1>
+      <p>Paste your Python code below, upload a .py file, or upload an image of the code:</p>
+      <textarea
+        placeholder="Paste your Python code here..."
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+        className="code-input"
+      ></textarea>
+      <br />
+      <input type="file" onChange={handleFileChange} />
+      <br />
+      <button className="analyze-button" onClick={handleAnalyze}>Analyze Code</button>
+      <div className="results">
+        <h2>Result:</h2>
+        <p>Readability: {readability}</p>
+        <p>Bugs Detected: {bugs}</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <footer>
+        &copy; 2025 Code Analyzer. Built by Master Apollo & Apprentice Chie
+      </footer>
+    </div>
+  );
 }
 
 export default App
