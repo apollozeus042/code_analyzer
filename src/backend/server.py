@@ -95,7 +95,42 @@ def bug_localization(extracted_text):
 
     # 5. Print the prediction
     print("Predicted Error Type:", predicted_error[0])
-    return predicted_error[0]
+    predicted_error = map_predicted_error(predicted_error[0])
+    return predicted_error
+
+def map_predicted_error(predicted_error):
+    error_map = {
+        "TLE": "Time Limit Exceeded",
+        "0": "No bug found",
+        "TypeError": "TypeError",
+        "ValueError": "ValueError",
+        "IndexError": "IndexError",
+        "AttributeError": "AttributeError",
+        "EOFError": "End of File",
+        "ModuleNotFoundError": "ModuleNotFoundError",
+        "ZeroDivisionError": "ZeroDivisionError",
+        "KeyError": "KeyError",
+        "ImportError": "ImportError",
+        "OverflowError": "Overflow",
+        "FileNotFoundError": "FileNotFoundError",
+        "RecursionError": "RecursionError",
+        "SyntaxError": "SyntaxError",
+        "NameError": "NameError",
+        "MLE": "Maximum Likelihood Estimation",
+        "RuntimeError": "RuntimeError",
+        "UnboundLocalError": "UnboundLocalError",
+        "1": "Unknown Error",
+    }
+
+    # If predicted_error is a list or array, extract the first element
+    if isinstance(predicted_error, (list, np.ndarray)):
+        predicted_error = predicted_error[0]  
+
+    # Perform dictionary lookup
+    mapped_label = error_map.get(predicted_error, "Unknown Error")
+    print("Predicted Error Type:", mapped_label)  # Debugging output
+    return mapped_label
+
 
 @app.route("/upload", methods=["POST"])
 def analyze_code():
