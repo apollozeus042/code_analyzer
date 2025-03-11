@@ -111,7 +111,11 @@ def analyze_code():
             return jsonify({"extracted_text": extracted_text, "readability": int(readability_score), "bugs":bug_identified})
 
     elif "code" in request.form:
-        return jsonify({"extracted_text": request.form["code"]})
+        extracted_text= request.form.get("code")
+        print(extracted_text)
+        readability_score = readability(extracted_text)
+        bug_identified= bug_localization(extracted_text)
+        return jsonify({"extracted_text": extracted_text, "readability": int(readability_score), "bugs":bug_identified})
 
     return jsonify({"error": "No valid input provided"}), 400
 
